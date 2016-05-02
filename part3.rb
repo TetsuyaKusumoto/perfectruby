@@ -96,3 +96,158 @@ end
 2.times do
   puts 'こんにちわ'
 end
+
+languages = %w(Perl Python Ruby Smalltalk JavaScript)
+
+languages.each do |language|
+  puts language
+  if language == 'Ruby'
+    break 'I found Rubby!!'
+  end
+end
+
+#例外
+#raise 'error!'
+
+begin
+  #raise StandardError, 'error!'
+rescue => e
+  puts "Error occurred (#{e.class})"
+  p e.class
+  p e.message
+  p e.backtrace
+else
+  p 'OK'
+ensure
+  p "ensure"
+end
+
+catch :triple_loop do
+  loop do
+    p 'one'
+    loop do
+      p 'two'
+      loop do
+        p 'three'
+        throw :triple_loop
+      end
+    end
+  end
+end
+
+catch :entire do
+  p "entire"
+  catch :process do
+    p "process"
+    throw :entire
+  end
+end
+
+# yield
+def block_sample
+  puts 'stand up'
+  yield if block_given?
+  puts 'sit down'
+end
+
+block_sample
+block_sample do
+  puts 'walk'
+end
+
+def display_value
+  puts yield
+end
+
+display_value do
+  4423
+end
+
+display_value do
+  next 42
+end
+
+display_value do
+  break 42
+end
+
+def with_current_time
+  yield Time.now
+end
+
+with_current_time do |now|
+  puts now.year
+end
+
+def default_argument_for_block
+  yield
+end
+
+default_argument_for_block do |val = 'Hi'|
+  puts val
+end
+
+def flexible_arguments_for_block
+  yield 1,2,3
+end
+
+flexible_arguments_for_block do |*params|
+  puts params.inspect
+end
+
+def block_sample(&block)
+  puts 'stand up'
+
+  block.call if block
+  puts 'sit down'
+end
+
+block_sample do
+  puts 'walk'
+end
+
+1/0 rescue false
+
+people = %w(Alice Bob Charlie)
+block = Proc.new {|name| puts name}
+people.each &block
+
+p2 = :upcase.to_proc
+p p2.call('hi')
+
+p people.map {|person| person.upcase}
+p people.map(&:upcase)
+
+def write_with_lock
+  File.open 'time.txt', 'w' do |f|
+    f.flock File::LOCK_EX
+
+    yield f
+
+    f.flock File::LOCK_UN
+  end
+end
+
+write_with_lock do |f|
+  f.puts Time.now
+end
+
+people = []
+%w(Alice Bob Chalie).each do |person|
+  people << person
+end
+
+p people
+
+system('uname')
+
+#exec 'uname'
+#puts 'hello'
+str = 'abc'
+p str.reverse
+p str
+p str.reverse!
+p str
+__END__
+
+p "END"
