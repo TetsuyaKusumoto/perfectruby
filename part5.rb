@@ -141,3 +141,159 @@ p $2
 
 /(?<number>[0-9]+)/ === 'abc-123'
 p Regexp.last_match[:number]
+
+array = [4,4,2,3, 1,3,4]
+p array.include?(4)
+
+p [1,2,3] + [4,5]
+
+p [4,4,2,3] - [4,3]
+
+p [1, 2, 3] & [2, 3, 4]
+
+p [1, 2, 3] * 2
+
+p array[2]
+
+p array[2, 2]
+p array[2..4]
+p array.values_at(1)
+p array.values_at(1,3)
+p array.first
+p array.first(2)
+p array.last
+p array.last(2)
+p array.sample
+p array.sample(2)
+
+ary = [[:foo, 4], [:bar, 2], [:baz, 3]]
+p ary.assoc(:bar)
+
+p array << 3
+p array.push 3
+p array.pop
+p array.shift
+p array.unshift 4
+p array.select! {|v| v.even? }
+p array.reject! {|v| v.even? }
+
+array = [4,4,2,3, 1,3,4]
+
+p array.delete 4
+p array.delete_at 1
+array = [4, [4, [2, 3]]]
+p array.flatten
+
+array = [4, 4, 2, 3]
+array.sort!
+
+array = ["fooo", "fooo", "fo", "foo"]
+p array.sort_by! { |v| v.length }
+
+array = [1, 3, 5, 7, 9]
+p array.bsearch {|n| n > 6}
+p array.bsearch {|n| n > 10}
+
+array = [24, 1, 365]
+p array.join
+p array.join('-')
+
+hash = {one: 1, two: 2}
+
+hash.each do |key, val|
+  puts "#{key}: #{val}"
+end
+
+hash.each_key do |key|
+  puts key
+end
+
+hash.each_value do |key|
+  puts key
+end
+
+hash = {}
+hash[:foo] = 'bar'
+p hash
+
+hash.delete(:foo)
+p hash
+
+hash = {foo: 1, bar: 2, baz: 3}
+hash.select! {|key, val| val.odd?}
+p hash
+p hash.reject! {|key, val| val.odd?}
+
+a = {one: 'A', two: nil}
+b = {two: 'B', three: 'C'}
+
+p a.merge(b)
+
+has_default = Hash.new {|hash, key| Time.now}
+p has_default['foo']
+sleep 1
+p has_default['foo']
+
+hash = {}
+hash.fetch('foo', 'default')
+hash.fetch('foo') {|key| key}
+
+a = {one: 1, two: 2}.to_a
+p a.assoc(:one)
+
+ary = ['key1', 'one', 'key2', 'two']
+p Hash[*ary]
+ary = [['key1', 'one'], ['key2', 'two']]
+p Hash[ary]
+
+now = Time.now
+p now.zone
+p now.getutc
+now.utc
+
+p now.zone
+
+p now.year
+p now.month
+p now.day
+p now.hour
+p now.min
+p now.sec
+p now.wday
+p now.yday
+
+past = Time.now
+future = Time.now
+
+p past <=> future
+p past < future
+p past > future
+
+a = Time.now
+sleep 1
+b = Time.now
+
+p b-a
+
+p Time.utc(2011, 4, 1, 5, 30, 20, 100)
+p Time.local(2011, 4, 1, 5, 30, 20, 100)
+
+file = File.open('time.txt')
+puts file.read
+file.close
+
+File.open 'time.txt' do |file|
+  while line = file.gets
+    puts line
+  end
+end
+
+File.open 'time.txt' do |file|
+  file.each_line do |line|
+    puts line
+  end
+end
+
+File.open 'time.txt', 'w' do |f|
+  f.write 'Hello'
+end
