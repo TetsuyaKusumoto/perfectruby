@@ -297,3 +297,34 @@ end
 File.open 'time.txt', 'w' do |f|
   f.write 'Hello'
 end
+
+File.open 'counter', File::RDWR |File::CREAT do |f|
+  f.flock File::LOCK_EX
+
+  count = f.read.to_i
+  f.rewind
+  f.write count.succ
+end
+
+File.open 'counter' do |f|
+  p f.atime
+  p f.ctime
+  p f.mtime
+  p f.size
+end
+
+p Dir.pwd
+p Dir.home
+p Dir.entries('.')
+
+require 'socket'
+
+Process.daemon
+
+TCPServer.open 'localhost', 4423 do |server|
+  loop do
+    client = server.accept
+    client.puts Time.now
+    client.close
+  end
+end
