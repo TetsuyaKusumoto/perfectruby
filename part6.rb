@@ -42,3 +42,8 @@ end
 
 p InstanceCountClass.instance_count
 p NewInstanceCountClass.instance_count
+
+require 'date'
+a = DateTime.new(1993, 2, 24, 12, 30, 45)
+p a
+p a.strftime('%Y%m%d') #=> "Sat"
